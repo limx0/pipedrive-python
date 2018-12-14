@@ -65,35 +65,11 @@ class Client:
             raise Exception(
                 "The URL {0} retrieved an {1} error. Please check your request body and try again.\nRaw message: {2}".format(
                     response.url, response.status_code, response.text))
-        elif response.status_code == 401:
+        elif response.status_code in (401, 403):
             raise Exception(
                 "The URL {0} retrieved and {1} error. Please check your credentials, make sure you have permission to perform this action and try again.".format(
                     response.url, response.status_code))
-        elif response.status_code == 403:
-            raise Exception(
-                "The URL {0} retrieved and {1} error. Please check your credentials, make sure you have permission to perform this action and try again.".format(
-                    response.url, response.status_code))
-        elif response.status_code == 404:
-            raise Exception(
-                "The URL {0} retrieved an {1} error. Please check the URL and try again.\nRaw message: {2}".format(
-                    response.url, response.status_code, response.text))
-        elif response.status_code == 410:
-            raise Exception(
-                "The URL {0} retrieved an {1} error. Please check the URL and try again.\nRaw message: {2}".format(
-                    response.url, response.status_code, response.text))
-        elif response.status_code == 422:
-            raise Exception(
-                "The URL {0} retrieved an {1} error. Please check the URL and try again.\nRaw message: {2}".format(
-                    response.url, response.status_code, response.text))
-        elif response.status_code == 429:
-            raise Exception(
-                "The URL {0} retrieved an {1} error. Please check the URL and try again.\nRaw message: {2}".format(
-                    response.url, response.status_code, response.text))
-        elif response.status_code == 500:
-            raise Exception(
-                "The URL {0} retrieved an {1} error. Please check the URL and try again.\nRaw message: {2}".format(
-                    response.url, response.status_code, response.text))
-        elif response.status_code == 501:
+        elif response.status_code in (404, 410, 422, 429, 500, 501):
             raise Exception(
                 "The URL {0} retrieved an {1} error. Please check the URL and try again.\nRaw message: {2}".format(
                     response.url, response.status_code, response.text))
@@ -276,6 +252,13 @@ class Client:
         if deal_id is not None:
             url = "deals/{0}/products".format(deal_id)
             return self._get(url, **kwargs)
+
+    def get_deal_fields(self, deal_field_id=None, **kwargs):
+        if deal_field_id is not None:
+            url = "dealFields/{0}".format(deal_field_id)
+        else:
+            url = "dealFields"
+        return self._get(url, **kwargs)
 
     # Notes section, see the api documentation: https://developers.pipedrive.com/docs/api/v1/#!/Notes
     def get_notes(self, note_id=None, **kwargs):
