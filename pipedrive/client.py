@@ -11,12 +11,12 @@ class Client:
     api_version = "v1/"
     header = {"Accept": "application/json, */*", "content-type": "application/json"}
 
-    def __init__(self, api_base_url, client_id=None, client_secret=None, oauth=False):
+    def __init__(self, api_base_url, client_id=None, client_secret=None, oauth=False, token=None):
         self.client_id = client_id
         self.client_secret = client_secret
         self.oauth = oauth
         self.api_base_url = api_base_url
-        self.token = None
+        self.token = token
 
     def make_request(self, method, endpoint, data=None, json=None, **kwargs):
         """
