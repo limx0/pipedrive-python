@@ -7,8 +7,10 @@ from pipedrive.client import Client
 
 @pytest.fixture()
 def client():
-    c = Client(api_base_url=os.environ['PIPEDRIVE_BASE_URL'])
-    c.set_token(os.environ['PIPEDRIVE_API_KEY'])
+    c = Client(
+        api_base_url=os.environ['PIPEDRIVE_BASE_URL'],
+        token=os.environ['PIPEDRIVE_API_KEY'],
+    )
     return c
 
 
